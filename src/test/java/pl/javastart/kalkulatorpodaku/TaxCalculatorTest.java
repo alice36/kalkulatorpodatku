@@ -21,6 +21,7 @@ public class TaxCalculatorTest {
         assertThat(tax, is(0.));
     }
 
-    // TODO 50000 -> 8433,98
+    // TODO 50 000 -> 8444
+    // TODO 100 000 -> 19 470
 
 }
