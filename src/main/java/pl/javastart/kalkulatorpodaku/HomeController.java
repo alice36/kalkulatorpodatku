@@ -1,5 +1,7 @@
 package pl.javastart.kalkulatorpodaku;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class HomeController {
 
+    @Autowired TaxCalculator taxCalculator;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("input", new InputData());
@@ -18,21 +22,16 @@ public class HomeController {
     }
 
     @PostMapping("/calculate")
-    @ResponseBody
-    public String calculate(InputData inpuData) {
+    public String calculate(InputData inputData, Model model) {
 
-        int income = inpuData.getIncome();
+        int income = inputData.getIncome();
 
-        double podatek = 0;
+        double podatek = taxCalculator.calculateTax(income);
 
-        if(income < 86528) {
-            podatek = 0.18 * income - 556;
-        } else {
-            podatek = 0.32 * income;
-        }
+        model.addAttribute("tax", podatek);
+        model.addAttribute("input", new InputData());
 
-
-        return "Podatek do zapłacenia to : " + podatek + "zł";
+        return "index";
     }
 
 }
