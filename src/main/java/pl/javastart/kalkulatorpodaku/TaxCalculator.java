@@ -10,6 +10,10 @@ public class TaxCalculator {
 
         double podatek = 0;
 
+        if(income <= 3089) {
+            return 0;
+        }
+
         if(income < 86528) {
             podatek = 0.18 * income - 556;
         } else {
