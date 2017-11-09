@@ -19,8 +19,20 @@ public class HomeController {
 
     @PostMapping("/calculate")
     @ResponseBody
-    public String calculate(InputData model) {
-        return "Podatek do zapłacenia to : " + 123 + "zł";
+    public String calculate(InputData inpuData) {
+
+        int income = inpuData.getIncome();
+
+        double podatek = 0;
+
+        if(income < 86528) {
+            podatek = 0.18 * income - 556;
+        } else {
+            podatek = 0.32 * income;
+        }
+
+
+        return "Podatek do zapłacenia to : " + podatek + "zł";
     }
 
 }
